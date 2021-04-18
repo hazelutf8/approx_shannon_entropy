@@ -1,5 +1,5 @@
-use std::io::Read;
 use approx_shannon_entropy::shannon_entropy;
+use std::io::Read;
 
 fn main() -> std::io::Result<()> {
     let mut lines = String::new();

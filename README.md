@@ -9,7 +9,7 @@ Usable on no_std due to use of approximate natural log from [micromath](https://
 Add this to your Cargo.toml
 ```
 [dependencies]
-shannon-entropy = "0.1.0"
+approx_shannon_entropy = "0.1.1"
 ```
 
 # Examples

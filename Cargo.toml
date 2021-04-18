@@ -1,11 +1,10 @@
 [package]
 name        = "approx_shannon_entropy"
-version     = "0.1.0"
-description = "Approximate shannon entropy, using natural logarithm approximation"
+version     = "0.1.1"
+description = "Approximate Shannon entropy, using micromath natural logarithm"
 authors     = ["hazelutf8 <hazelutf8@protonmail.com>"]
 license     = "Apache-2.0 OR MIT"
 repository  = "https://github.com/hazelutf8/approx_shannon_entropy"
-homepace    = "https://github.com/hazelutf8/approx_shannon_entropy" 
 readme      = "README.md"
 edition     = "2018"
 categories  = ["embedded", "mathematics", "no-std"]
@@ -21,4 +20,3 @@ path = "examples/three_bits.rs"
 [[example]]
 name = "stdin_entropy"
 path = "examples/stdin_entropy.rs"
-

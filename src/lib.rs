@@ -1,7 +1,7 @@
 #![cfg_attr(not(test), no_std)]
 #![forbid(unsafe_code)]
 #![deny(missing_docs)]
-//! Approximate shannon entropy measurement
+//! Approximate Shannon Entropy
 //!
 //! Based on [shannon-entropy](https://github.com/insanitybit/shannon-entropy)
 //!
@@ -9,12 +9,10 @@
 
 use micromath::F32Ext;
 
-
 /// Supported word size
 type Word = u8;
 /// Supported rational/floating point type
 type Rational = f32;
-
 
 /// Shannon entropy of a slice
 ///
@@ -32,8 +30,7 @@ type Rational = f32;
 /// # assert_eq!(found, expect);
 /// ```
 #[allow(clippy::let_and_return)]
-pub fn shannon_entropy(word_slice: &[Word]) -> Rational
-{
+pub fn shannon_entropy(word_slice: &[Word]) -> Rational {
     // Create buckets for a histogram, u8 is 256 slots
     // Anything other than `Word = 8 bits` would require a different approach
     debug_assert!((1usize) + (Word::max_value() as usize) <= usize::max_value());
@@ -47,7 +44,8 @@ pub fn shannon_entropy(word_slice: &[Word]) -> Rational
     // Not verified if changes timing on any arch
     let rat_len: Rational = word_slice.len() as Rational;
     let log_div: Rational = F32Ext::ln(2.0 as Rational);
-    let en_sum = word_map.iter()
+    let en_sum = word_map
+        .iter()
         .fold(0.0 as Rational, |acc, &freq| match freq {
             0 => acc,
             freq => {
@@ -60,7 +58,6 @@ pub fn shannon_entropy(word_slice: &[Word]) -> Rational
     let entropy = en_sum.abs() / (rat_len * log_div);
     entropy
 }
-
 
 /// Shannon metric entropy of a slice
 ///
@@ -79,8 +76,7 @@ pub fn shannon_entropy(word_slice: &[Word]) -> Rational
 /// # let expect = 0f32;
 /// # assert_eq!(found, expect);
 /// ```
-pub fn shannon_entropy_metric(word_slice: &[Word]) -> Rational
-{
+pub fn shannon_entropy_metric(word_slice: &[Word]) -> Rational {
     shannon_entropy(word_slice) / (word_slice.len() as Rational)
 }
 
@@ -88,9 +84,11 @@ pub fn shannon_entropy_metric(word_slice: &[Word]) -> Rational
 mod tests {
     use super::*;
 
-    // Arbitrary error constants that floating point and micromath should be within
-    const SIGMA: Rational = 10e-1; /// Absolute difference max allowed
-    const FRACT: Rational = 0.14;  /// Fractional error margin allowed (n*100 == %)
+    // Arbitrary test error constants that floating point and micromath should be within
+    /// Absolute difference max allowed
+    const SIGMA: Rational = 10e-1;
+    /// Fractional error margin allowed (n*100 == %)
+    const FRACT: Rational = 0.14;
 
     #[test]
     fn shannon_expected_value() {
@@ -104,14 +102,7 @@ mod tests {
             [1, 2, 3, 4, 5, 6, 7, 8],
         ];
         // Helpful to calculate the expected entropy value https://planetcalc.com/2476/
-        let test_expect = [
-            0.0,
-            0.0,
-            1.0,
-            2.0,
-            2.15563906,
-            3.0,
-        ];
+        let test_expect = [0.0, 0.0, 1.0, 2.0, 2.15563906, 3.0];
         for i in 0..test_vectors.len() {
             let e = test_expect[i];
             let l = e - SIGMA;
